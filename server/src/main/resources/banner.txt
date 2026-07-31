@@ -1,0 +1,10 @@
+
+  _____             
+ | ____|__ _ _ __  
+ |  _| / _` | '_ \ 
+ | |__| (_| | | | |
+ |_____\__,_|_| |_|
+
+  Server v1.0 - Rajkot
+  Team: Dhruv, Nayan, Yagna, Daksh
+  Mentor: S.V. Ramani, A.V.P.T.I. Rajkot
