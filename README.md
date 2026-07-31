@@ -120,6 +120,28 @@ Look for "inet" under your network interface.
 | GET | `/api/chat/conversations` | Get conversations list |
 | GET | `/api/chat/unread/count` | Get unread count |
 
+### Global Chat
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/chat/global/send` | Send global message |
+| GET | `/api/chat/global` | Get all global messages |
+| GET | `/api/chat/global/recent` | Get recent messages |
+
+### Private Chat
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/chat/private/send` | Send private message |
+| GET | `/api/chat/private/{userId}` | Get private conversation |
+| POST | `/api/chat/private/read` | Mark private messages read |
+| GET | `/api/chat/private/conversations` | Get private conversations |
+| GET | `/api/chat/private/unread/count` | Get private unread count |
+
+### User Search
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/users/search?username=` | Search users by username |
+| GET | `/api/users/username/{username}` | Get user by username |
+
 ### WebSocket
 | Endpoint | Description |
 |----------|-------------|
@@ -193,24 +215,33 @@ ZentroServerFork/
 │   │   │   ├── UserController.java         # /api/users/*
 │   │   │   ├── GigController.java          # /api/gigs/*
 │   │   │   ├── ChatController.java         # /api/chat/*
+│   │   │   ├── GlobalChatController.java   # /api/chat/global/*
+│   │   │   ├── PrivateChatController.java  # /api/chat/private/*
+│   │   │   ├── UserSearchController.java   # /api/users/search
 │   │   │   └── LogController.java          # /api/logs/*
 │   │   ├── model/
 │   │   │   ├── User.java
 │   │   │   ├── Gig.java
 │   │   │   ├── GigApplication.java
 │   │   │   ├── Message.java
+│   │   │   ├── GlobalMessage.java
+│   │   │   ├── PrivateMessage.java
 │   │   │   └── ActivityLog.java
 │   │   ├── repository/
 │   │   │   ├── UserRepository.java
 │   │   │   ├── GigRepository.java
 │   │   │   ├── GigApplicationRepository.java
 │   │   │   ├── MessageRepository.java
+│   │   │   ├── GlobalMessageRepository.java
+│   │   │   ├── PrivateMessageRepository.java
 │   │   │   └── ActivityLogRepository.java
 │   │   ├── service/
 │   │   │   ├── AuthService.java
 │   │   │   ├── UserService.java
 │   │   │   ├── GigService.java
 │   │   │   ├── ChatService.java
+│   │   │   ├── GlobalChatService.java
+│   │   │   ├── PrivateChatService.java
 │   │   │   └── ActivityLogService.java
 │   │   ├── security/
 │   │   │   ├── JwtUtil.java
@@ -226,17 +257,49 @@ ZentroServerFork/
 │   └── app/src/main/java/com/skillmatch/rajkot/
 │       ├── activities/
 │       │   ├── LoginActivity.java         # Modified with IP input
-│       │   └── RegisterActivity.java      # Server registration
+│       │   ├── RegisterActivity.java      # Server registration
+│       │   ├── GlobalChatActivity.java    # Global chat room
+│       │   ├── PrivateChatActivity.java   # Private messaging
+│       │   ├── ChatListActivity.java      # Conversation list
+│       │   └── SearchUserActivity.java    # User search
+│       ├── adapters/
+│       │   ├── GlobalChatAdapter.java     # Global chat messages
+│       │   └── PrivateChatAdapter.java    # Private chat messages
 │       ├── api/
 │       │   ├── ApiClient.java             # REST API client
 │       │   └── ChatWebSocketClient.java   # WebSocket client
 │       └── res/layout/
 │           ├── activity_login_server.xml  # Login with IP field
-│           └── activity_register_server.xml
+│           ├── activity_register_server.xml
+│           ├── activity_global_chat.xml
+│           ├── activity_private_chat.xml
+│           ├── activity_chat_list.xml
+│           └── activity_search_user.xml
+├── FEATURE_SYNC.md                  # Feature sync tracking
 ├── START_SERVER.bat                 # One-click server start
 ├── QUICK_START.bat                  # Build + start
 └── README.md                        # This file
 ```
+
+---
+
+## New Features
+
+### Global Chat
+- Real-time global chat room where all users can communicate
+- Messages persist in the database
+- WebSocket support for instant updates
+
+### User Search
+- Search users by username
+- View user profiles
+- Start private chats from search results
+
+### Private Chat
+- 1:1 private messaging between users
+- Real-time message delivery via WebSocket
+- Read receipts and unread message counts
+- Conversation list showing all chats
 
 ---
 
