@@ -68,5 +68,12 @@ git cherry-pick <commit-hash>
 - Test server endpoints before Android integration
 
 ## Recent Sync Activity
-- [Date] - Added global chat, user search, private chat features
-- [Date] - Initial fork created from zentro-rajkot
+- 2026-08-01 - Release v1.0.0 created with all features
+- 2026-08-01 - Added global chat, user search, private chat features
+- 2026-08-01 - Initial fork created from zentro-rajkot
+
+## Main Branch Features (v2.5.0)
+- Custom Logo fix (adaptive icon XMLs deleted)
+- Home Page Gig Board fix
+- AI Chat Session Management
+- These features need to be synced to the server fork
