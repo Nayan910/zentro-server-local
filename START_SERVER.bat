@@ -1,12 +1,16 @@
 @echo off
-title Zentro Server - Rajkot
+title Zentro Server - Rajkot [MONITORING MODE]
 color 0A
 
-echo ============================================
-echo    ZENTRO SERVER - Local Network Server
-echo    Team: Dhruv, Nayan, Yagna, Daksh
-echo    Mentor: S.V. Ramani, A.V.P.T.I. Rajkot
-echo ============================================
+echo.
+echo  ╔══════════════════════════════════════════════════════════════╗
+echo  ║           ZENTRO SERVER - LOCAL NETWORK SERVER              ║
+echo  ║           Request Monitor & Activity Logger                 ║
+echo  ╠══════════════════════════════════════════════════════════════╣
+echo  ║  Team: Chauhan Dhruv, Nayan Chotaliya, Yagna Desai,        ║
+echo  ║        Daksh Gondoliya                                      ║
+echo  ║  Mentor: S.V. Ramani, A.V.P.T.I. Rajkot                   ║
+echo  ╚══════════════════════════════════════════════════════════════╝
 echo.
 
 :: Check if Java is available
@@ -31,13 +35,24 @@ for /f "tokens=2 delims=:" %%a in ('ipconfig ^| findstr /i "IPv4" ^| findstr /v 
 )
 set LOCAL_IP=%LOCAL_IP: =%
 
-echo [INFO] Server IP: %LOCAL_IP%
-echo [INFO] Server Port: 8080
-echo [INFO] Android clients should connect to: %LOCAL_IP%
+echo.
+echo  ╔══════════════════════════════════════════════════════════════╗
+echo  ║  SERVER CONFIGURATION                                       ║
+echo  ╠══════════════════════════════════════════════════════════════╣
+echo  ║  IP Address: %LOCAL_IP%
+echo  ║  Port:       8080
+echo  ║  Console:    http://%LOCAL_IP%:8080/h2-console
+echo  ║  Stats:      http://%LOCAL_IP%:8080/api/server/stats
+echo  ║  Health:     http://%LOCAL_IP%:8080/api/server/health
+echo  ╚══════════════════════════════════════════════════════════════╝
+echo.
+echo  [MONITORING] All requests will be logged below:
+echo  ──────────────────────────────────────────────────────────────
 echo.
 
 :: Create data directory
 if not exist "data" mkdir data
+if not exist "assets" mkdir assets
 
 :: Build and run with Maven
 echo [INFO] Building and starting server...

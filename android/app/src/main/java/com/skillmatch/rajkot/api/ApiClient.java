@@ -173,6 +173,17 @@ public class ApiClient {
         // Logs
         @GET("api/logs")
         retrofit2.Call<java.util.List<Map<String, Object>>> getAllLogs(@Header("Authorization") String auth);
+
+        // Server Stats
+        @GET("api/server/stats")
+        retrofit2.Call<Map<String, Object>> getServerStats();
+
+        @GET("api/server/health")
+        retrofit2.Call<Map<String, Object>> getServerHealth();
+
+        // Assets
+        @GET
+        retrofit2.Call<okhttp3.ResponseBody> getAsset(@Url String url);
     }
 
     // ---- Callback Interface ----
@@ -455,6 +466,71 @@ public class ApiClient {
 
             @Override
             public void onFailure(retrofit2.Call<Map<String, Object>> call, Throwable t) {
+                callback.onError("Connection error: " + t.getMessage());
+            }
+        });
+    }
+
+    // ---- Server Stats ----
+
+    public void getServerStats(ApiCallback<Map<String, Object>> callback) {
+        apiService.getServerStats().enqueue(new retrofit2.Callback<Map<String, Object>>() {
+            @Override
+            public void onResponse(retrofit2.Call<Map<String, Object>> call,
+                                   retrofit2.Response<Map<String, Object>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Failed to get server stats");
+                }
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<Map<String, Object>> call, Throwable t) {
+                callback.onError("Connection error: " + t.getMessage());
+            }
+        });
+    }
+
+    public void getServerHealth(ApiCallback<Map<String, Object>> callback) {
+        apiService.getServerHealth().enqueue(new retrofit2.Callback<Map<String, Object>>() {
+            @Override
+            public void onResponse(retrofit2.Call<Map<String, Object>> call,
+                                   retrofit2.Response<Map<String, Object>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Health check failed");
+                }
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<Map<String, Object>> call, Throwable t) {
+                callback.onError("Connection error: " + t.getMessage());
+            }
+        });
+    }
+
+    // ---- Asset Loading ----
+
+    public String getAssetUrl(String assetPath) {
+        return getBaseUrl() + "api/assets/" + assetPath;
+    }
+
+    public void loadAsset(String assetPath, ApiCallback<okhttp3.ResponseBody> callback) {
+        apiService.getAsset(getAssetUrl(assetPath)).enqueue(new retrofit2.Callback<okhttp3.ResponseBody>() {
+            @Override
+            public void onResponse(retrofit2.Call<okhttp3.ResponseBody> call,
+                                   retrofit2.Response<okhttp3.ResponseBody> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Failed to load asset");
+                }
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<okhttp3.ResponseBody> call, Throwable t) {
                 callback.onError("Connection error: " + t.getMessage());
             }
         });

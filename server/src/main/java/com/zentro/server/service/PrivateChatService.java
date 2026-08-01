@@ -82,7 +82,7 @@ public class PrivateChatService {
                 .collect(Collectors.toList());
     }
 
-    private Map<String, Object> sanitizeMessage(PrivateMessage msg) {
+    public Map<String, Object> sanitizeMessage(PrivateMessage msg) {
         Map<String, Object> map = new HashMap<>();
         map.put("id", msg.getId());
         map.put("content", msg.getContent());
